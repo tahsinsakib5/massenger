@@ -19,7 +19,11 @@ class _MassagepageState extends State<Massagepage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      
       child: Scaffold(
+        appBar: AppBar(leading:IconButton(onPressed: () {
+          FirebaseAuth.instance.signOut();
+        }, icon:Icon(Icons.abc_rounded)),),
         body: Column(
        
        

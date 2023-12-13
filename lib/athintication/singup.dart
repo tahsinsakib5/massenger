@@ -22,34 +22,41 @@ class _SingupState extends State<Singup> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            TextField(controller: emailcontroler,decoration: InputDecoration(hintText: "email")),
-            TextField(controller: paswordcotroler,decoration: InputDecoration(hintText: "passwword")),
-              TextField(controller: namecotroler,decoration: InputDecoration(hintText: "name")),
-                TextField(controller: agecotroler,decoration: InputDecoration(hintText: "age")),
-                  TextField(controller: thikanacotroler,decoration: InputDecoration(hintText: "city")),
-    
-             ElevatedButton(onPressed: ()async{
-
-        
-               
-               String? userid = await Singup();
-
-                    if (userid != null) {
-                      Map<String, dynamic> data = {
-                        'name':
-                               namecotroler.text,
-                        'age': agecotroler.text,
-                         'kihcana': thikanacotroler.text,
-                      };
-
-                       await userdata (userid, data);
-
-                    
-                    }
-             }, child: Text("singin"))
-          ],
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(controller: emailcontroler,decoration: InputDecoration(hintText: "email")),
+                TextField(controller: paswordcotroler,decoration: InputDecoration(hintText: "passwword")),
+                  TextField(controller: namecotroler,decoration: InputDecoration(hintText: "name")),
+                    TextField(controller: agecotroler,decoration: InputDecoration(hintText: "age")),
+                      TextField(controller: thikanacotroler,decoration: InputDecoration(hintText: "city")),
+              
+                 ElevatedButton(onPressed: ()async{
+            
+            
+                   
+                   String? userid = await Singup();
+            
+                        if (userid != null) {
+                          Map<String, dynamic> data = {
+                            'name':
+                                   namecotroler.text,
+                            'age': agecotroler.text,
+                             'kihcana': thikanacotroler.text,
+                          };
+            
+                           await userdata (userid, data);
+            
+                        
+                        }
+                 }, child: Text("singin"))
+              ],
+            ),
+          ),
         ),
       ),
     );
