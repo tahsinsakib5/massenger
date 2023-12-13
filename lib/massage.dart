@@ -1,59 +1,148 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:massenger/template.dart';
 
 class Massagepage extends StatefulWidget {
-  const Massagepage({super.key});
+  String chatID;
+  Massagepage({super.key, required this.chatID});
 
   @override
   State<Massagepage> createState() => _MassagepageState();
 }
 
- List <bool> value = [false,true,false,true,true,false,true];
- List masseges = ["hi" , " kemon aso balalo nak", "balo","tumi"," allahor rhmotebalo asi","akhon ki kortaso kalke amader barite aso"];
- final massegecontrolar = TextEditingController();
+List<bool> value = [false, true, false, true, true, false, true];
+List masseges = [
+  "hi",
+  " kemon aso balalo nak",
+  "balo",
+  "tumi",
+  " allahor rhmotebalo asi",
+  "akhon ki kortaso kalke amader barite aso"
+];
+final massegecontrolar = TextEditingController();
+
 class _MassagepageState extends State<Massagepage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      
       child: Scaffold(
-        appBar: AppBar(leading:IconButton(onPressed: () {
-          FirebaseAuth.instance.signOut();
-        }, icon:Icon(Icons.abc_rounded)),),
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              icon: Icon(Icons.abc_rounded)),
+        ),
         body: Column(
-       
-       
           children: [
+            FutureBuilder(
+                future: getChatList(widget.chatID),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data!.isNotEmpty) {
+                      print('Chat Found');
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          Map<String, dynamic> chat = snapshot.data![index];
 
-           
-            ListView.builder(shrinkWrap: true,itemCount:masseges.length,itemBuilder: (context, index) =>Template(massege: masseges[index], chenge: value[index]),),
-           Spacer(),
-            TextField(controller:massegecontrolar,decoration:InputDecoration(border:OutlineInputBorder(),suffixIcon:IconButton(onPressed: () {
-              massege();
-            }, icon:Icon(Icons.send))))
+                          bool isThisUser = false;
+
+                          if (chat['uid'] ==
+                              FirebaseAuth.instance.currentUser!.uid) {
+                            isThisUser = true;
+                          }
+
+                          return Template(
+                              massege: chat['msg'], chenge: isThisUser);
+                        },
+                      );
+                    } else {
+                      print('No Chat Found');
+
+                      return const Center(
+                        child: Text('Start Chatting'),
+                      );
+                    }
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
+            Spacer(),
+            TextField(
+                controller: massegecontrolar,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                        onPressed: () async {
+                          await sendMessage(widget.chatID);
+                          massegecontrolar.clear();
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.send))))
           ],
         ),
       ),
     );
   }
 
-Future massege ()async{
- var time = DateTime.now();
-String userid=await  FirebaseAuth.instance.currentUser!.uid;
+  Future<void> sendMessage(String chatID) async {
+    final collection = FirebaseFirestore.instance.collection('massages');
+    final docRef = collection.doc(chatID);
 
-print ("userid $userid");
+    final newMap = {
+      // Add your key-value pairs for the new chat entry
+      'uid': FirebaseAuth.instance.currentUser!.uid,
+      'msg': massegecontrolar.text,
+      'timestamp': DateTime.now(),
+      // ... add other relevant data for your chat entry
+    };
 
-var colaction = await  FirebaseFirestore.instance.collection("user_data").doc(userid).collection("massage");
+// Option 2: Use arrayUnion if you're working with larger sets of data
+    await docRef.update({
+      'chat_list': FieldValue.arrayUnion([newMap])
+    });
+  }
 
-Map <String,dynamic> massage ={
-"massage":massegecontrolar.text,
-"time":time,
-};
-colaction.add(massage);
-}
+  Future<List<Map<String, dynamic>>> getChatList(String chatID) async {
+    List<Map<String, dynamic>> allChatList = [];
 
+    final collection = FirebaseFirestore.instance.collection('massages');
+    final docRef = collection.doc(chatID);
+
+    await docRef.get().then((documentSnapshot) {
+      if (documentSnapshot.exists) {
+        final data = documentSnapshot.data();
+        if (data != null && data.containsKey('chat_list')) {
+          // Field exists, get its value
+          final chatList = data['chat_list'] as List<dynamic>;
+
+          print('Field Found ${chatList.length}');
+
+          for (var chat in chatList) {
+            allChatList.add(chat as Map<String, dynamic>);
+          }
+
+          print('All Chat 1 : ${allChatList.length}');
+
+          // ... process chatList
+        } else {
+          // Field doesn't exist, create and set it to an empty array
+          docRef.update({'chat_list': []}).then((_) {
+            // Access the newly created field (empty array)
+            // final chatList = documentSnapshot.get('chat_list') as List<dynamic>;
+            // ... process chatList
+          });
+        }
+      } else {
+        // Document not found
+      }
+    });
+
+    print('All Chat 2 : ${allChatList.length}');
+
+    return allChatList;
+  }
 }
