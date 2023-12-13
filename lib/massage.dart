@@ -5,17 +5,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:massenger/template.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class Massagepage extends StatefulWidget {
+  const Massagepage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Massagepage> createState() => _MassagepageState();
 }
 
  List <bool> value = [false,true,false,true,true,false,true];
  List masseges = ["hi" , " kemon aso balalo nak", "balo","tumi"," allahor rhmotebalo asi","akhon ki kortaso kalke amader barite aso"];
  final massegecontrolar = TextEditingController();
-class _HomePageState extends State<HomePage> {
+class _MassagepageState extends State<Massagepage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
