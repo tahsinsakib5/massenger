@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "580946574207",
+    "project_id": "massenger-def6c",
+    "storage_bucket": "massenger-def6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580946574207:android:b2c9088073ec88a02c784a",
+        "android_client_info": {
+          "package_name": "com.example.massenger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB942D0UJULWeDZqtQi-dOxcxC8WzWq2xY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

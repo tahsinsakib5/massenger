@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:massenger/hpmepage.dart';
+
+
+import 'package:massenger/athintication/redairedpage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
 
-void main() {
+
+void main()async{
+  WidgetsFlutterBinding.ensureInitialized();
+ await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -13,7 +19,7 @@ void main() {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:HomePage(),
+      home:Redairegpage(),
     );
   }
 }
