@@ -39,6 +39,7 @@ dependencies:
   dio: ^5.4.0
   firebase_auth: ^4.15.2
   cloud_firestore: ^4.13.5
+  zego_uikit_prebuilt_call: ^3.18.4
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:massenger/call_page.dart';
 import 'package:massenger/template.dart';
 
 class Massagepage extends StatefulWidget {
@@ -10,7 +11,6 @@ class Massagepage extends StatefulWidget {
   @override
   State<Massagepage> createState() => _MassagepageState();
 }
-
 
 final massegecontrolar = TextEditingController();
 
@@ -24,10 +24,65 @@ class _MassagepageState extends State<Massagepage> {
               onPressed: () {
                 FirebaseAuth.instance.signOut();
               },
-              icon: Icon(Icons.abc_rounded)),
+              icon: const Icon(Icons.logout)),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CallPage(callID: '12345')));
+                },
+                icon: const Icon(Icons.call))
+          ],
         ),
         body: Column(
           children: [
+            StreamBuilder(
+                stream: streamCallData(widget.chatID),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var data = snapshot.data!.get('callData');
+
+                    bool isCalling = data['isCalling'];
+
+                    if (isCalling == true) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'User is Calling you',
+                                  textScaleFactor: 1.5,
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      String callID = data['callID'];
+
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CallPage(callID: callID)));
+                                    },
+                                    icon: const CircleAvatar(
+                                        backgroundColor: Colors.green,
+                                        child: Icon(Icons.call_end_rounded))),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  } else {
+                    return const Text('No data');
+                  }
+                }),
             FutureBuilder(
                 future: getChatList(widget.chatID),
                 builder: (context, snapshot) {
@@ -136,5 +191,12 @@ class _MassagepageState extends State<Massagepage> {
     print('All Chat 2 : ${allChatList.length}');
 
     return allChatList;
+  }
+
+  Stream<DocumentSnapshot> streamCallData(String chatID) {
+    return FirebaseFirestore.instance
+        .collection('massages')
+        .doc(chatID)
+        .snapshots();
   }
 }
