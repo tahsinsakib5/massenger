@@ -11,15 +11,7 @@ class Massagepage extends StatefulWidget {
   State<Massagepage> createState() => _MassagepageState();
 }
 
-List<bool> value = [false, true, false, true, true, false, true];
-List masseges = [
-  "hi",
-  " kemon aso balalo nak",
-  "balo",
-  "tumi",
-  " allahor rhmotebalo asi",
-  "akhon ki kortaso kalke amader barite aso"
-];
+
 final massegecontrolar = TextEditingController();
 
 class _MassagepageState extends State<Massagepage> {

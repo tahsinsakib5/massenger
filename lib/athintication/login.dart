@@ -29,7 +29,7 @@ class _CodepageState extends State<Codepage> {
     
             ElevatedButton(onPressed: () {
               login();
-            }, child:Text("send")),
+            }, child:Text("login")),
             TextButton(onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder:(context) =>Singup(),));
             }, child:Text("create acount"))
