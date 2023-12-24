@@ -31,8 +31,10 @@ class _MassagepageState extends State<Massagepage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              const CallPage(callID: '12345')));
+                          builder: (context) => CallPage(
+                                callID: '12345',
+                                userID: FirebaseAuth.instance.currentUser!.uid,
+                              )));
                 },
                 icon: const Icon(Icons.call))
           ],
