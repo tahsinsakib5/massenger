@@ -10,6 +10,7 @@ class CallPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Container();
     // return ZegoUIKitPrebuiltCall  (
     //   appID:
     //       92035656, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
@@ -20,25 +21,9 @@ class CallPage extends StatelessWidget {
     //   callID: callID,
     //   // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
     //   config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()..onOnlySelfInRoom,
-      
+
     //   plugins: [ZegoUIKitSignalingPlugin()],
-      
-      
+
     // );
-
-  
-
-
-
-
-
-
-   
- 
-
-    
   }
-
-  
- 
 }

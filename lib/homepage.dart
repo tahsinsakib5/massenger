@@ -29,19 +29,23 @@ class homepages extends StatelessWidget {
                       onTap: () {
                         String? chatID = friendMap['chat_id'];
 
-                        if (chatID == null) {
+                        String? targetUserID = friendMap['uid'];
+
+                        if (chatID != null && targetUserID != null) {
+                          print('Chat ID: $chatID');
+                          print('Target UserID: $targetUserID');
+
                           //Create a new Chat on Messege collection
-                          print('Chat id not found, create Chat ID');
-                        } else {
-                          print(chatID);
 
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    Massagepage(chatID: chatID),
+                                builder: (context) => Massagepage(
+                                    chatID: chatID, targetUserID: targetUserID),
                               ));
-                        }
+
+                          print('Chat id not found, create Chat ID');
+                        } else {}
                       },
                       child: Card(
                         child: Row(
@@ -116,6 +120,4 @@ class homepages extends StatelessWidget {
       plugins: [ZegoUIKitSignalingPlugin()],
     );
   }
-
-
 }

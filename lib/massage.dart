@@ -8,7 +8,8 @@ import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 class Massagepage extends StatefulWidget {
   String chatID;
-  Massagepage({super.key, required this.chatID});
+  String targetUserID;
+  Massagepage({super.key, required this.chatID, required this.targetUserID});
 
   @override
   State<Massagepage> createState() => _MassagepageState();
@@ -41,18 +42,14 @@ class _MassagepageState extends State<Massagepage> {
                 },
                 icon: const Icon(Icons.video_call)),
             ZegoSendCallInvitationButton(
-              isVideoCall: true,
-              resourceID:
-                  "zegouikit_call", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+              isVideoCall: false,
+              // resourceID:
+              //     "zegouikit_call", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
               invitees: [
                 ZegoUIKitUser(
-                  id: targetUserID,
-                  name: targetUserName,
+                  id: widget.targetUserID,
+                  name: "User 2",
                 ),
-                ...ZegoUIKitUser(
-                  id: targetUserID,
-                  name: targetUserName,
-                )
               ],
             )
           ],
