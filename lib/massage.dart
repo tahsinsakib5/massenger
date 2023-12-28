@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:massenger/call_page.dart';
 import 'package:massenger/template.dart';
+import 'package:massenger/voicecallpage.dart';
 
 class Massagepage extends StatefulWidget {
   String chatID;
@@ -36,7 +37,10 @@ class _MassagepageState extends State<Massagepage> {
                                 userID: FirebaseAuth.instance.currentUser!.uid,
                               )));
                 },
-                icon: const Icon(Icons.call))
+                icon: const Icon(Icons.video_call)),
+
+
+                
           ],
         ),
         body: Column(

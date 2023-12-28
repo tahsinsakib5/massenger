@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:massenger/massage.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 class homepages extends StatelessWidget {
   const homepages({super.key});
@@ -102,5 +104,16 @@ class homepages extends StatelessWidget {
     }
 
     return friendList;
+  }
+
+
+  void getcall(){
+   ZegoUIKitPrebuiltCallInvitationService().init(
+    appID:92035656,
+    appSign:'6fdd400e6246b5540ebfd9747a21168cc0b5dbc44cc0278b20397e0a6357bed3',
+    userID:FirebaseAuth.instance.currentUser!.uid,
+    userName:"user 1",
+    plugins: [ZegoUIKitSignalingPlugin()],
+  );
   }
 }

@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^4.15.2
   cloud_firestore: ^4.13.5
   zego_uikit_prebuilt_call: ^3.18.4
+  zego_uikit_signaling_plugin: ^2.7.2
 
 dev_dependencies:
   flutter_test:
