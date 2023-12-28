@@ -41,16 +41,19 @@ class _MassagepageState extends State<Massagepage> {
                               )));
                 },
                 icon: const Icon(Icons.video_call)),
-            ZegoSendCallInvitationButton(
-              isVideoCall: false,
-              // resourceID:
-              //     "zegouikit_call", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
-              invitees: [
-                ZegoUIKitUser(
-                  id: widget.targetUserID,
-                  name: "User 2",
-                ),
-              ],
+            FittedBox(
+              fit: BoxFit.fitHeight,
+              child: ZegoSendCallInvitationButton(
+                isVideoCall: false,
+                // resourceID:
+                //     "zegouikit_call", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+                invitees: [
+                  ZegoUIKitUser(
+                    id: widget.targetUserID,
+                    name: "User 2",
+                  ),
+                ],
+              ),
             )
           ],
         ),
@@ -64,7 +67,7 @@ class _MassagepageState extends State<Massagepage> {
 
                     bool isCalling = data['isCalling'];
 
-                    if (isCalling == true) {
+                    if (isCalling == false) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Card(
@@ -107,41 +110,42 @@ class _MassagepageState extends State<Massagepage> {
                     return const Text('No data');
                   }
                 }),
-            FutureBuilder(
-                future: getChatList(widget.chatID),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.data!.isNotEmpty) {
-                      print('Chat Found');
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          Map<String, dynamic> chat = snapshot.data![index];
+            Expanded(
+              child: FutureBuilder(
+                  future: getChatList(widget.chatID),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.data!.isNotEmpty) {
+                        print('Chat Found');
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            Map<String, dynamic> chat = snapshot.data![index];
 
-                          bool isThisUser = false;
+                            bool isThisUser = false;
 
-                          if (chat['uid'] ==
-                              FirebaseAuth.instance.currentUser!.uid) {
-                            isThisUser = true;
-                          }
+                            if (chat['uid'] ==
+                                FirebaseAuth.instance.currentUser!.uid) {
+                              isThisUser = true;
+                            }
 
-                          return Template(
-                              massege: chat['msg'], chenge: isThisUser);
-                        },
-                      );
+                            return Template(
+                                massege: chat['msg'], chenge: isThisUser);
+                          },
+                        );
+                      } else {
+                        print('No Chat Found');
+
+                        return const Center(
+                          child: Text('Start Chatting'),
+                        );
+                      }
                     } else {
-                      print('No Chat Found');
-
-                      return const Center(
-                        child: Text('Start Chatting'),
-                      );
+                      return const Center(child: CircularProgressIndicator());
                     }
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                }),
-            Spacer(),
+                  }),
+            ),
             TextField(
                 controller: massegecontrolar,
                 decoration: InputDecoration(
