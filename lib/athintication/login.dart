@@ -31,8 +31,8 @@ class _CodepageState extends State<Codepage> {
               controller: passworscontroler,
             ),
             ElevatedButton(
-                onPressed: () {
-                  login();
+                onPressed: () async {
+                  await login();
                   onUserLogin();
                 },
                 child: Text("login")),
