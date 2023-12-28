@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:massenger/call_page.dart';
 import 'package:massenger/template.dart';
 import 'package:massenger/voicecallpage.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 class Massagepage extends StatefulWidget {
   String chatID;
@@ -24,6 +25,7 @@ class _MassagepageState extends State<Massagepage> {
           leading: IconButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
+                onUserLogout();
               },
               icon: const Icon(Icons.logout)),
           actions: [
@@ -38,9 +40,21 @@ class _MassagepageState extends State<Massagepage> {
                               )));
                 },
                 icon: const Icon(Icons.video_call)),
-
-
-                
+            ZegoSendCallInvitationButton(
+              isVideoCall: true,
+              resourceID:
+                  "zegouikit_call", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+              invitees: [
+                ZegoUIKitUser(
+                  id: targetUserID,
+                  name: targetUserName,
+                ),
+                ...ZegoUIKitUser(
+                  id: targetUserID,
+                  name: targetUserName,
+                )
+              ],
+            )
           ],
         ),
         body: Column(
@@ -81,8 +95,9 @@ class _MassagepageState extends State<Massagepage> {
                                                   )));
                                     },
                                     icon: const CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(Icons.call_end_rounded))),
+                                      backgroundColor: Colors.green,
+                                      child: Icon(Icons.call_end_rounded),
+                                    )),
                               ],
                             ),
                           ),
@@ -145,6 +160,14 @@ class _MassagepageState extends State<Massagepage> {
         ),
       ),
     );
+  }
+
+  /// on App's user logout
+  void onUserLogout() {
+    /// 1.2.2. de-initialization ZegoUIKitPrebuiltCallInvitationService
+    /// when app's user is logged out
+    ZegoUIKitPrebuiltCallInvitationService().uninit();
+    print('Zego Cloud removed');
   }
 
   Future<void> sendMessage(String chatID) async {
