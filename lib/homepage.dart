@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:massenger/add_friend.dart';
 import 'package:massenger/massage.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
@@ -12,7 +13,9 @@ class homepages extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: ,
-
+           floatingActionButton:FloatingActionButton(onPressed: () {
+             Navigator.push(context,MaterialPageRoute(builder: (context) => AddFriend(),));
+           },child:Icon(Icons.message),),
       body: Column(children: [
         FutureBuilder(
           future: allfiend(),

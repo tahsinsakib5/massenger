@@ -23,28 +23,76 @@ class _CodepageState extends State<Codepage> {
     return SafeArea(
       child: Scaffold(
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: emailcontrilar,
+
+              Text("Rakib pobas bondo",style: TextStyle(fontSize:20),),
+
+              SizedBox(height: 30,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: emailcontrilar,
+               
+                decoration: InputDecoration(
+                   hintText:"email",
+                  border: OutlineInputBorder()
+                  
+                ),
+              ),
             ),
-            TextField(
-              controller: passworscontroler,
+          
+           
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: passworscontroler,
+                 decoration: InputDecoration(
+                   hintText:"password",
+                  border: OutlineInputBorder()
+                  
+                ),
+              ),
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  await login();
+          
+          SizedBox(
+            height: 15,
+          ),
+
+
+      MaterialButton(onPressed: ()async{
+        await login();
                   onUserLogin();
-                },
-                child: Text("login")),
-            TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Singup(),
-                      ));
-                },
-                child: Text("create acount"))
+      },child: Container(
+        height:50,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius:BorderRadius.circular(30),
+          color: Colors.blue
+        ),
+        child: Center(child: Text("Login",style: TextStyle(color: Colors.white),)),
+      ),),
+
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+            Text("you have "),
+            
+                  TextButton(
+                    
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Singup(),
+                            ));
+                      },
+                      child: Text("create acount")),
+                ],
+              ),
+            )
           ],
         ),
       ),

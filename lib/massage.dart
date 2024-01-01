@@ -30,17 +30,7 @@ class _MassagepageState extends State<Massagepage> {
               },
               icon: const Icon(Icons.logout)),
           actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CallPage(
-                                callID: '12345',
-                                userID: FirebaseAuth.instance.currentUser!.uid,
-                              )));
-                },
-                icon: const Icon(Icons.video_call)),
+            
             FittedBox(
               fit: BoxFit.fitHeight,
               child: ZegoSendCallInvitationButton(
@@ -52,6 +42,28 @@ class _MassagepageState extends State<Massagepage> {
                     id: widget.targetUserID,
                     name: "User 2",
                   ),
+
+
+                  
+                ],
+              ),
+            ),
+
+
+             FittedBox(
+              fit: BoxFit.fitHeight,
+              child: ZegoSendCallInvitationButton(
+                isVideoCall: true,
+                // resourceID:
+                //     "zegouikit_call", //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+                invitees: [
+                  ZegoUIKitUser(
+                    id: widget.targetUserID,
+                    name: "User 2",
+                  ),
+
+
+                  
                 ],
               ),
             )
@@ -149,7 +161,9 @@ class _MassagepageState extends State<Massagepage> {
             TextField(
                 controller: massegecontrolar,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                     fillColor:Colors.grey[200],
+                     filled: true,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
                     suffixIcon: IconButton(
                         onPressed: () async {
                           await sendMessage(widget.chatID);
