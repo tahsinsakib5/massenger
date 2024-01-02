@@ -14,7 +14,7 @@ class homepages extends StatelessWidget {
     return Scaffold(
       // appBar: ,
            floatingActionButton:FloatingActionButton(onPressed: () {
-             Navigator.push(context,MaterialPageRoute(builder: (context) => AddFriend(),));
+             Navigator.push(context,MaterialPageRoute(builder: (context)=>addfriends(),));
            },child:Icon(Icons.message),),
       body: Column(children: [
         FutureBuilder(
