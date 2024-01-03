@@ -30,34 +30,60 @@ class _SingupState extends State<Singup> {
               children: [
                 TextField(
                     controller: emailcontroler,
-                    decoration: InputDecoration(hintText: "email")),
-                TextField(
-                    controller: paswordcotroler,
-                    decoration: InputDecoration(hintText: "passwword")),
+                    decoration: InputDecoration(
+                        hintText: "email", border: OutlineInputBorder())),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextField(
+                      controller: paswordcotroler,
+                      decoration: InputDecoration(
+                          hintText: "passwword", border: OutlineInputBorder())),
+                ),
                 TextField(
                     controller: namecotroler,
-                    decoration: InputDecoration(hintText: "name")),
-                TextField(
-                    controller: agecotroler,
-                    decoration: InputDecoration(hintText: "age")),
+                    decoration: InputDecoration(
+                        hintText: "name", border: OutlineInputBorder())),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextField(
+                      controller: agecotroler,
+                      decoration: InputDecoration(
+                          hintText: "age", border: OutlineInputBorder())),
+                ),
                 TextField(
                     controller: thikanacotroler,
-                    decoration: InputDecoration(hintText: "city")),
-                ElevatedButton(
-                    onPressed: () async {
-                      String? userid = await Singup();
+                    decoration: InputDecoration(
+                        hintText: "city", border: OutlineInputBorder())),
+                SizedBox(
+                  height: 10,
+                ),
+                MaterialButton(
+                  onPressed: () async {
+                    String? userid = await Singup();
 
-                      if (userid != null) {
-                        Map<String, dynamic> data = {
-                          'name': namecotroler.text,
-                          'age': agecotroler.text,
-                          'kihcana': thikanacotroler.text,
-                        };
+                    if (userid != null) {
+                      Map<String, dynamic> data = {
+                        'name': namecotroler.text,
+                        'age': agecotroler.text,
+                        'kihcana': thikanacotroler.text,
+                      };
 
-                        await userdata(userid, data);
-                      }
-                    },
-                    child: Text("singin"))
+                      await userdata(userid, data);
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.blue),
+                    child: Center(
+                        child: Text(
+                      "singup",
+                      style: TextStyle(color: Colors.white),
+                    )),
+                  ),
+                ),
               ],
             ),
           ),

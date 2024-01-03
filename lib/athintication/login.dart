@@ -63,7 +63,7 @@ class _CodepageState extends State<Codepage> {
 
       MaterialButton(onPressed: ()async{
         await login();
-                  onUserLogin();
+                  
       },child: Container(
         height:50,
         width: double.infinity,
@@ -107,19 +107,5 @@ class _CodepageState extends State<Codepage> {
   }
 
   /// on App's user login
-  void onUserLogin() {
-    /// 1.2.1. initialized ZegoUIKitPrebuiltCallInvitationService
-    /// when app's user is logged in or re-logged in
-    /// We recommend calling this method as soon as the user logs in to your app.
-    ZegoUIKitPrebuiltCallInvitationService().init(
-      appID: 92035656,
-      appSign:
-          '6fdd400e6246b5540ebfd9747a21168cc0b5dbc44cc0278b20397e0a6357bed3',
-      userID: FirebaseAuth.instance.currentUser!.uid,
-      userName: "user 1",
-      plugins: [ZegoUIKitSignalingPlugin()],
-    );
 
-    print('Zego initialized');
-  }
 }

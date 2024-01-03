@@ -71,57 +71,7 @@ class _MassagepageState extends State<Massagepage> {
         ),
         body: Column(
           children: [
-            StreamBuilder(
-                stream: streamCallData(widget.chatID),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var data = snapshot.data!.get('callData');
-
-                    bool isCalling = data['isCalling'];
-
-                    if (isCalling == false) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  'User is Calling you',
-                                  textScaleFactor: 1.5,
-                                ),
-                                IconButton(
-                                    onPressed: () {
-                                      String callID = data['callID'];
-
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => CallPage(
-                                                    callID: callID,
-                                                    userID: FirebaseAuth
-                                                        .instance
-                                                        .currentUser!
-                                                        .uid,
-                                                  )));
-                                    },
-                                    icon: const CircleAvatar(
-                                      backgroundColor: Colors.green,
-                                      child: Icon(Icons.call_end_rounded),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  } else {
-                    return const Text('No data');
-                  }
-                }),
+          
             Expanded(
               child: FutureBuilder(
                   future: getChatList(widget.chatID),

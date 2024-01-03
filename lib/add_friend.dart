@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:massenger/massage.dart';
 import 'package:massenger/model.dart';
@@ -27,6 +28,16 @@ class addfriends extends StatelessWidget {
    };
 
             createnewfried(allfiend);
+
+
+              Map <String,dynamic>allfiendtow ={
+     "chat_id":docchat,
+     "name":users.name,
+     "uid":FirebaseAuth.instance.currentUser!.uid,
+   };
+
+
+            createnewfriedtow(users.d_id.toString(), allfiendtow);
 
            
   
@@ -89,6 +100,17 @@ class addfriends extends StatelessWidget {
   }
 
 
+  Future createnewfriedtow(String docid,Map<String,dynamic>allfiend)async{
+  
+  final setfriend= await FirebaseFirestore.instance.collection("user_data").doc(docid);
+
+   setfriend.update({
+    "friends":FieldValue.arrayUnion([allfiend])
+   });
+
+  }
+
+
   Future newchatducoment()async{
  var documents= await  FirebaseFirestore.instance.collection("massages");
 
@@ -99,8 +121,6 @@ class addfriends extends StatelessWidget {
       'timestamp': DateTime.now(),
       // ... add other relevant data for your chat entry
     };
-
-
 
  DocumentReference documentReference =await documents.add({
     'chat_list': FieldValue.arrayUnion([newMap])
