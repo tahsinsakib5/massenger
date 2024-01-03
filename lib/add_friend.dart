@@ -89,6 +89,18 @@ class addfriends extends StatelessWidget {
   }
 
 
+
+   Future getmyuser()async{
+  var uid=  FirebaseAuth.instance.currentUser!.uid;
+   var colactionsnsapshort = FirebaseFirestore.instance.collection("user_data").doc(uid).get();
+
+         
+   }
+
+
+
+
+
   Future createnewfried(Map<String,dynamic>allfiend)async{
     var docid =FirebaseAuth.instance.currentUser!.uid;
   final setfriend= await FirebaseFirestore.instance.collection("user_data").doc(docid);
