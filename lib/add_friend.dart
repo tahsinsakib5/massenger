@@ -32,7 +32,7 @@ class addfriends extends StatelessWidget {
 
               Map <String,dynamic>allfiendtow ={
      "chat_id":docchat,
-     "name":users.name,
+     "name":await getmyuser(),
      "uid":FirebaseAuth.instance.currentUser!.uid,
    };
 
@@ -92,9 +92,10 @@ class addfriends extends StatelessWidget {
 
    Future getmyuser()async{
   var uid=  FirebaseAuth.instance.currentUser!.uid;
-   var colactionsnsapshort = FirebaseFirestore.instance.collection("user_data").doc(uid).get();
-
-         
+   var colactionsnsapshort =await FirebaseFirestore.instance.collection("user_data").doc(uid).get();
+     
+      var docSnap=colactionsnsapshort.data();
+      return docSnap!["name"];
    }
 
 
