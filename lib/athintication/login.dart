@@ -26,8 +26,7 @@ class _CodepageState extends State<Codepage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
-              Text("Rakib pobas bondo",style: TextStyle(fontSize:20),),
-
+            
               SizedBox(height: 30,),
             Padding(
               padding: const EdgeInsets.all(8.0),
