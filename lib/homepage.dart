@@ -6,16 +6,40 @@ import 'package:massenger/massage.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
-class homepages extends StatelessWidget {
+class homepages extends StatefulWidget {
   const homepages({super.key});
 
   @override
+  State<homepages> createState() => _homepagesState();
+}
+
+ 
+
+class _homepagesState extends State<homepages> {
+
+ var userName = "loading..";
+
+
+
+
+
+  @override
+
+   
   Widget build(BuildContext context) {
+
+ 
     return Scaffold(
-      // appBar: ,
+      appBar: AppBar(title:FutureBuilder(
+        future:curentuser(),
+        builder: (context, snapshot) {
+          return Text(snapshot.data??"loading..");
+        }
+      ),),
            floatingActionButton:FloatingActionButton(onPressed: () {
              Navigator.push(context,MaterialPageRoute(builder: (context)=>addfriends(),));
            },child:Icon(Icons.message),),
+
       body: Column(children: [
         FutureBuilder(
           future: allfiend(),
@@ -81,16 +105,6 @@ class homepages extends StatelessWidget {
   }
 
   // Future<void> createChat() async {
-  //   await FirebaseFirestore.instance.collection('massages').add({});
-  // }
-
-  // Future<void> addChatIDinFriend(String friendID) async {
-  //   //Adding chatID to to friend in user_data collection
-  //   var uid = FirebaseAuth.instance.currentUser!.uid;
-  //   var docRef = FirebaseFirestore.instance.collection("user_data").doc(uid);
-
-  // }
-
   Future<List<Map<String, dynamic>>> allfiend() async {
     List<Map<String, dynamic>> friendList = [];
 
@@ -125,7 +139,6 @@ class homepages extends StatelessWidget {
     );
   }
 
-
     void onUserLogin() {
     /// 1.2.1. initialized ZegoUIKitPrebuiltCallInvitationService
     /// when app's user is logged in or re-logged in
@@ -140,5 +153,22 @@ class homepages extends StatelessWidget {
     );
 
     print('Zego initialized');
+  }
+
+    Future curentuser() async {
+    
+
+    var uid = FirebaseAuth.instance.currentUser!.uid;
+    var docSnap =
+        await FirebaseFirestore.instance.collection("user_data").doc(uid).get();
+
+    // if (docSnap.exists) {
+      
+      var name = docSnap.get("name"); 
+      print(name);
+    
+    return name;
+
+  
   }
 }

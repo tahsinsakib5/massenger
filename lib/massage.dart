@@ -17,6 +17,8 @@ class Massagepage extends StatefulWidget {
 
 final massegecontrolar = TextEditingController();
 
+
+
 class _MassagepageState extends State<Massagepage> {
   @override
   Widget build(BuildContext context) {
@@ -29,8 +31,12 @@ class _MassagepageState extends State<Massagepage> {
                 onUserLogout();
               },
               icon: const Icon(Icons.logout)),
+              
+              
           actions: [
             
+
+             
             FittedBox(
               fit: BoxFit.fitHeight,
               child: ZegoSendCallInvitationButton(
@@ -71,7 +77,7 @@ class _MassagepageState extends State<Massagepage> {
         ),
         body: Column(
           children: [
-          
+            
             Expanded(
               child: FutureBuilder(
                   future: getChatList(widget.chatID),
@@ -119,6 +125,7 @@ class _MassagepageState extends State<Massagepage> {
                           await sendMessage(widget.chatID);
                           massegecontrolar.clear();
                           setState(() {});
+                          
                         },
                         icon: Icon(Icons.send))))
           ],
@@ -199,4 +206,10 @@ class _MassagepageState extends State<Massagepage> {
         .doc(chatID)
         .snapshots();
   }
+
+
+
+ 
+
+
 }
